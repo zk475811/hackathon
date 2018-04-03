@@ -1,3 +1,8 @@
+// Put env variables inside of an .Rprofile file in the working directory such as:
+
+Sys.setenv(DATABASE_USER = "username")
+---------------------------------------------------
+
 1. Find out how to put data into MySQL database
 2. Pull data from database and perform machine learning algorithms
 3. Put data where it needs to be for visuals

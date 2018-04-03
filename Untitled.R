@@ -24,6 +24,6 @@ print(importance(studentForest, type = 2))
 
 # data set read function
 loadData <- function() {
-  # change logic for loading from database
-  
+  location <- Sys.getenv("R_DATA_LOCATION")
+  return <- read.csv(location)
 }

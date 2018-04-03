@@ -3,8 +3,9 @@ library(randomForest)
 
 # docs at https://www.rdocumentation.org/packages/randomForest/versions/4.6-12
 
-# load the data set
-studentData <- loadData()
+# load the data set and predictors
+studentData <- loadDataCSV("R_DATA_LOCATION")
+predictors <- loadDataCSV("R_PREDICTOR_LOCATION")
 
 # create the forest
 studentForest <- randomForest(
@@ -23,7 +24,7 @@ print(studentForest)
 print(importance(studentForest, type = 2))
 
 # data set read function
-loadData <- function() {
-  location <- Sys.getenv("R_DATA_LOCATION")
+loadData <- function(sysVar) {
+  location <- Sys.getenv(sysVar)
   return <- read.csv(location)
 }

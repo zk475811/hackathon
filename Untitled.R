@@ -1,15 +1,39 @@
-install.packages("randomForest")
+install.packages("randomForest", repos = "http://cran.us.r-project.org")
 library(randomForest)
 
 # docs at https://www.rdocumentation.org/packages/randomForest/versions/4.6-12
 
+# FUNCTIONS -----------------------------------
+
+# data set read function
+loadDataCSV <- function(path) {
+  # colClasses is used to set the type of the column
+  # if using 1 and 0, then change to factor otherwise it will perform regression
+  return <- read.csv(
+    path,
+    head=TRUE,
+    sep = ",",
+    colClasses = c("success"="factor")
+  )
+}
+
+argCheck <- function(args) {
+  if(length(args) != 1) {
+    stop("One argument should be provided as the data input file path")
+  }
+}
+
+# END FUNCTIONS -------------------------------
+
 # load the data set and predictors
-studentData <- loadDataCSV("R_DATA_LOCATION")
+args <- commandArgs(trailingOnly = TRUE)
+argCheck(args)
+studentData <- loadDataCSV(args[1])
 
 # create the forest
 set.seed(12345)
 studentForest <- randomForest(
-  success ~,
+  success ~ .,
   data = studentData,
   ntree = 500,
   importance = TRUE
@@ -22,9 +46,3 @@ print(studentForest)
 # type = 1 for mean decrease in accuracy, type = 2 for mean decrease impurity
 # print(importance(studentForest, type = 2))
 print(importance(studentForest))
-
-# data set read function
-loadData <- function(sysVar) {
-  location <- Sys.getenv(sysVar)
-  return <- read.csv(location)
-}

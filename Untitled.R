@@ -8,11 +8,11 @@ library(RMySQL)
 # FUNCTIONS -----------------------------------
 
 # data set read function
-loadDataCSV <- function(path) {
+loadDataCSV <- function() {
   # colClasses is used to set the type of the column
   # if using 1 and 0, then change to factor otherwise it will perform regression
   return <- read.csv(
-    path,
+    Sys.getenv("CSV_FILE_PATH"),
     head=TRUE,
     sep = ",",
     colClasses = c("success"="factor")
@@ -22,10 +22,10 @@ loadDataCSV <- function(path) {
 loadDataMySQL <- function() {
   mydb <- dbConnect(
     MySQL(),
-    user='user',
-    password='password',
-    dbname='database_name',
-    host='host'
+    user=Sys.getenv("DATABASE_USER"),
+    password=Sys.getenv("DATABASE_PASSWORD"),
+    dbname=Sys.getenv("DATABASE_NAME"),
+    host=Sys.getenv("DATABASE_HOST")
   )
   
   result <- dbSendQuery(mydb, "select * from table")
@@ -36,18 +36,28 @@ loadDataMySQL <- function() {
   return <- mySqlData
 }
 
+loadData <- function() {
+  args <- commandArgs(trailingOnly = TRUE)
+  argCheck(args)
+  if(args[1] == "db") {
+    return <- loadDataMySQL()
+  } else if(args[1] == "csv") {
+    return <- loadDataCSV()
+  } else {
+    stop("Argument is data source type (csv, db)")
+  }
+}
+
 argCheck <- function(args) {
   if(length(args) != 1) {
-    stop("One argument should be provided as the data input file path")
+    stop("Argument is data source type (csv, db)")
   }
 }
 
 # END FUNCTIONS -------------------------------
 
 # load the data set and predictors
-args <- commandArgs(trailingOnly = TRUE)
-argCheck(args)
-studentData <- loadDataCSV(args[1])
+studentData <- loadData()
 
 # create the forest
 set.seed(12345)

@@ -33,7 +33,7 @@ loadDataMySQL <- function() {
   
   mydb <- dbDisconnect()
   
-  return mySqlData
+  return <- mySqlData
 }
 
 argCheck <- function(args) {

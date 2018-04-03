@@ -5,12 +5,11 @@ library(randomForest)
 
 # load the data set and predictors
 studentData <- loadDataCSV("R_DATA_LOCATION")
-predictors <- loadDataCSV("R_PREDICTOR_LOCATION")
 
 # create the forest
 set.seed(12345)
 studentForest <- randomForest(
-  x = predictors,
+  success ~,
   data = studentData,
   ntree = 500,
   importance = TRUE

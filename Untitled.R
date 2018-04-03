@@ -20,7 +20,7 @@ print(studentForest)
 
 # importance of each predictor
 # type = 1 for mean decrease in accuracy, type = 2 for mean decrease impurity
-print(importance(fit, type = 2))
+print(importance(studentForest, type = 2))
 
 # data set read function
 loadData <- function() {

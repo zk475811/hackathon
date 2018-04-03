@@ -32,9 +32,13 @@ studentData <- loadDataCSV(args[1])
 
 # create the forest
 set.seed(12345)
+
+train <- sample(1:nrow(studentData),nrow(studentData) * .75)
+
 studentForest <- randomForest(
   success ~ .,
   data = studentData,
+  subset = train,
   ntree = 500,
   importance = TRUE
 )

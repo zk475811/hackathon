@@ -1,5 +1,7 @@
 install.packages("randomForest", repos = "http://cran.us.r-project.org")
+install.packages("RMySQL", repos = "http://cran.us.r-project.org")
 library(randomForest)
+library(RMySQL)
 
 # docs at https://www.rdocumentation.org/packages/randomForest/versions/4.6-12
 
@@ -15,6 +17,23 @@ loadDataCSV <- function(path) {
     sep = ",",
     colClasses = c("success"="factor")
   )
+}
+
+loadDataMySQL <- function() {
+  mydb <- dbConnect(
+    MySQL(),
+    user='user',
+    password='password',
+    dbname='database_name',
+    host='host'
+  )
+  
+  result <- dbSendQuery(mydb, "select * from table")
+  mySqlData <- fetch(result, n = -1)
+  
+  mydb <- dbDisconnect()
+  
+  return mySqlData
 }
 
 argCheck <- function(args) {

@@ -8,12 +8,12 @@ studentData <- loadDataCSV("R_DATA_LOCATION")
 predictors <- loadDataCSV("R_PREDICTOR_LOCATION")
 
 # create the forest
+set.seed(12345)
 studentForest <- randomForest(
   x = predictors,
   data = studentData,
   ntree = 500,
-  importance = TRUE,
-  type = classification
+  importance = TRUE
 )
 
 # view the forest results 
@@ -21,7 +21,8 @@ print(studentForest)
 
 # importance of each predictor
 # type = 1 for mean decrease in accuracy, type = 2 for mean decrease impurity
-print(importance(studentForest, type = 2))
+# print(importance(studentForest, type = 2))
+print(importance(studentForest))
 
 # data set read function
 loadData <- function(sysVar) {

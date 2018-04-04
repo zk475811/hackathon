@@ -28,7 +28,8 @@ loadDataMySQL <- function() {
     host=Sys.getenv("DATABASE_HOST")
   )
   
-  result <- dbSendQuery(mydb, "select * from table")
+  sqlQuery <- paste("select * from", Sys.getenv("DATABASE_TABLE_NAME"))
+  result <- dbSendQuery(mydb, sqlQuery)
   mySqlData <- fetch(result, n = -1)
   
   mydb <- dbDisconnect()

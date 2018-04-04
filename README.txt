@@ -1,3 +1,17 @@
+// Put env variables inside of an .Rprofile file in the working directory such as:
+Sys.setenv(CSV_FILE_PATH = "placeholder")
+Sys.setenv(DATABASE_USER = "placeholder")
+Sys.setenv(DATABASE_PASSWORD = "placeholder")
+Sys.setenv(DATABASE_NAME = "placeholder")
+Sys.setenv(DATABASE_HOST = "placeholder")
+Sys.setenv(DATABASE_TABLE_NAME = "placeholder")
+---------------------------------------------------
+// Example of run command
+Rscript Untitled.r csv
+Rscript Untitled.r db
+--------------------------------------------------
+
+
 1. Find out how to put data into MySQL database
 2. Pull data from database and perform machine learning algorithms
 3. Put data where it needs to be for visuals
